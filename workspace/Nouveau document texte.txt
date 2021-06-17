@@ -1,0 +1,5 @@
+sequelize model:create --attributes "email:string, nom:string, prenom:string , password:string, username:string,avatar:string , role:int, adresse:string , cp:integer, pays:string" --name user
+
+sequelize seed:create --name user
+
+sequelize model:create --attributes "nom:string, description:string, image:string, adresse:string, cp:integer,pays:string, actif:boolean, category_id:integer" --name product
