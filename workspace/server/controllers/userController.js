@@ -42,14 +42,75 @@ exports.loginUser = (req, res, next) => {
     })(req, res, next);
 };
 
-exports.newUtilisateur = (req, res) => {
+exports.getAllUsers = (req, res) => {
+    pool.query("SELECT * FROM users", function(err, rows) {
+        if (err) {
+            console.log(err);
+        } else {
+            res.json({
+                user: rows,
+                success: true,
+            });
+        }
+
+    });
+};
+
+exports.deleteUser = (req, res, next) => {
+    var input = JSON.parse(JSON.stringify(req.body));
+    pool.query("DELETE FROM users WHERE id = " + input.id, function(err, rows, fields) {
+        if (err) {
+            console.log("Error in deleting Data : %s", err);
+            res.json({
+                success: false,
+                message: err
+            });
+        } else {
+            pool.query("SELECT * FROM users", function(err, rows) {
+                if (err) console.log("Error Editing list : %s", err);
+                res.json({
+                    success: true,
+                    message: 'utilisateur supprimé avec succes!',
+                    result: rows,
+                    
+                });
+            });
+
+        }
+    });
+};
+
+
+exports.getUserById = (req, res, next) => {
+    var input = JSON.parse(JSON.stringify(req.body));
+    pool.query("Select * FROM users WHERE id = " + input.id, function(err, rows, fields) {
+        if (err) {
+            console.log("Error in deleting Data : %s", err);
+            res.json({
+                success: false,
+                message: err
+            });
+        } else {
+            
+                res.json({
+                    success: true,
+                    result: rows,
+                    
+                });
+            
+
+        }
+    });
+};
+
+ exports.newUtilisateur = (req, res) => {
 
     var input = JSON.parse(JSON.stringify(req.body));
-    console.log(input);
+   
 
     pool.query("SELECT * FROM users", function(err, rows) {
         if (err) console.log("Error get list : %s", err);
-        var id = (rows.length > 0) ? rows[rows.length - 1].id : rows.length;
+      /*   var id = (rows.length > 0) ? rows[rows.length - 1].id : rows.length; */
         if (input.avatar) {
             let avatar = input.avatar.split(';base64,').pop();
             var avatarName = Date.now() + '.png'
@@ -71,18 +132,9 @@ exports.newUtilisateur = (req, res) => {
             pays: input.pays,
 
         };
-        pool.query("SELECT email FROM users WHERE email = '" + input.email,
-            function(err, rows) {
-                if (err) console.log("Error Editing list : %s", err);
-                if (rows.length > 0) {
-                    res.json({
-                        message: 'Cet email existe déjà!',
-                        success: false,
-                        rows: rows
-                    });
-                } else {
-                    bcrypt.hash(input.password, 10, function(err, hash) {
-                        data.password = hash;
+    
+                    
+                        
                         pool.query("INSERT INTO users set ?", data, function(err, rows, fields) {
                             if (err) {
                                 console.log("Error in Inserting Data : %s", err);
@@ -95,16 +147,15 @@ exports.newUtilisateur = (req, res) => {
                                     if (err) console.log("Error Editing list : %s", err);
                                     res.json({
                                         utilisateurs: rows,
-                                        token: token,
                                         success: true,
                                         message: 'utilisateur crée avec succes!'
                                     });
                                 });
                             }
                         });
-                    })
-                }
-            })
+                    
+               
+          
 
     });
-};
+}; 

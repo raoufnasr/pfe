@@ -28,6 +28,10 @@ module.exports = {
                 type: Sequelize.STRING,
                 allowNull: true
             },
+            phone: {
+                type: Sequelize.INTEGER,
+                allowNull: true
+            },
             avatar: {
                 type: Sequelize.STRING,
                 allowNull: true
@@ -44,8 +48,16 @@ module.exports = {
                 type: Sequelize.INTEGER,
                 allowNull: true
             },
+            ville: {
+                type: Sequelize.STRING,
+                allowNull: true
+            },
             pays: {
                 type: Sequelize.STRING,
+                allowNull: true
+            },
+            actif: {
+                type: Sequelize.BOOLEAN,
                 allowNull: true
             },
             createdAt: {

@@ -41,7 +41,7 @@ passport.use('user-local', new LocalStrategy({ usernameField: 'username' }, (use
         }
 
         // all is well, return successful user
-        console.log("AAAA", rows[0])
+       
         return done(null, rows[0]);
 
     });

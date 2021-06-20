@@ -21,6 +21,10 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             allowNull: true
         },
+        phone: {
+            type: DataTypes.INTEGER,
+            allowNull: true
+        },
         avatar: {
             type: DataTypes.STRING,
             allowNull: true
@@ -37,8 +41,16 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.INTEGER,
             allowNull: true
         },
+        ville: {
+            type: DataTypes.STRING,
+            allowNull: true
+        },
         pays: {
             type: DataTypes.STRING,
+            allowNull: true
+        },
+        actif: {
+            type: DataTypes.BOOLEAN,
             allowNull: true
         },
     }, {});
